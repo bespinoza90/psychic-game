@@ -15,8 +15,7 @@ var guessText = document.getElementById("guess-text");
 var guessLeft = document.getElementById("guess-left");
 
 
-var computerGuess = letters[Math.floor(Math.random() * letters.length)];
-console.log(computerGuess);
+
 
 
 var reset = function () {
@@ -24,6 +23,10 @@ var reset = function () {
     guessedLetters = [];
     computerGuess = letters[Math.floor(Math.random() * letters.length)];
     console.log(computerGuess);
+    winText.textContent = "Wins: " + win;
+    loseText.textContent = "Losses: " + lose;
+    guessText.textContent = "Guesses: " + guesses;
+    guessLeft.textContent = guessedLetters;
 }
 
 
@@ -31,32 +34,35 @@ document.onkeyup = function (event) {
     var userGuess = event.key.toUpperCase();
     console.log(userGuess);
 
-    if (guesses === 0) {
-        alert("The computer guess was " + computerGuess + " try again!!!");
-        lose++;
-        reset();
-    }
 
 
-    else if (computerGuess === userGuess) {
+    if (computerGuess === userGuess) {
         win++;
-        guess = 10;
-        guessedLetters.push(userGuess);
+        //guess = 10;
+        //guessedLetters.push(userGuess);
         alert("Good Job! You guessed correct");
-        computerGuess = letters[Math.floor(Math.random() * letters.length)];
+        // computerGuess = letters[Math.floor(Math.random() * letters.length)];
         reset();
     }
 
-
-    else if (computerGuess !== userGuess) {
+    else {
         guesses--;
         guessedLetters.push(userGuess);
-        alert("Guess again!");
+        guessText.textContent = "Guesses: " + guesses;
+        guessLeft.textContent = guessedLetters;
+      
+        if (guesses === 0) {
+            alert("The computer guess was " + computerGuess + " try again!!!");
+            lose++;
+            reset();
+        }
+        //else{
+       //     alert("Guess again!");
+        //}
     }
+  //  winText.textContent = "Wins: " + win;
+  //  loseText.textContent = "Losses: " + lose;
 
-
-    winText.textContent = "Wins: " + win;
-    loseText.textContent = "Losses: " + lose;
-    guessText.textContent = "Guesses: " + guesses;
-    guessLeft.textContent = guessedLetters;
 };
+
+reset()
